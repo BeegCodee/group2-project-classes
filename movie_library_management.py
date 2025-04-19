@@ -13,18 +13,27 @@ from movie import Movie
 
 #loads movies from the csv file into a list
 def load_movies(file_name):
-    file_name = input('Enter the movie catalog filename: ')
+    file_name = input('Enter the movie catalog filename: ')  
     if not os.path.exists(file_name):
-        print(f'The catalog file ({file_name}) is not found\nThe movie library management system starts without catalog')
-        return []
+        print(f"File {file_name} not found. Starting with empty library.")
+        return movies
     
     movies = []
-    with open(file_name, 'r') as f:
-        for line in f:
-            movie_data = line.strip().split(',')
-            if movie_data not in movies:
-                movies.append(movie_data)
-        return movies
+
+    with open(file_name, mode='r') as file:
+        for line in file:
+            line = line.strip() 
+            movie_data = line.split(',')
+            movie_id = movie_data[0].strip()
+            title = movie_data[1].strip()
+            director = movie_data[2].strip()
+            genre = int(movie_data[3])
+            available = movie_data[4].strip().lower() == 'true'
+            price = float(movie_data[5])
+            movie = Movie(movie_id, title, director, genre, available, price)
+            movies.append(movie)
+    
+    return movies
 
 #test functionality (remove in the future)
 print(load_movies('movies'))
@@ -38,7 +47,7 @@ def save_movies(file_name, movies):
                 f'{movie.get_title()}',
                 f'{movie.get_director()}',  
                 str(movie.get_genre()),
-                str(movie.get_available()).lower(),
+                str(movie.get_available()).capitalize(),
                 str(movie.get_price())
             ]
             file.write(','.join(movie_data) + '\n')
