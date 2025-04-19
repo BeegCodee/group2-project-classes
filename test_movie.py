@@ -5,6 +5,7 @@
 - Version/Date: Winter 2025
 '''
 # Import the Movie class
+
 from movie import Movie
 
 def main():
@@ -58,8 +59,8 @@ def main():
 
     # Lastly, print report of all movies (using implicit call to __str__())
     print("\n*** Test 3/Final Output ***")
-    print("{:^10s}{:^30s}{:^25s}{:^15s}{:^15s}{:^15s}{:^15s}{:^15s}".format("ID", "Title",
-        "Director", "Genre", "Availability", "Price $", "Fine Rate $","Rental Count"))
+    print("{:^10s}{:^30s}{:^25s}{:^15s}{:^15s}{:^15s}{:^15s}".format("ID", "Title",
+        "Director", "Genre", "Availability", "Price $" ,"Rental Count"))
     for movie in movie_list:
         print(movie)
         
