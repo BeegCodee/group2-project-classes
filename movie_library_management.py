@@ -32,7 +32,6 @@ def load_movies(file_name):
             price = float(movie_data[5])
             movie = Movie(movie_id, title, director, genre, available, price)
             movies.append(movie)
-
     return movies
 
 #When exiting the program, this function saves all movie changes to the csv file
