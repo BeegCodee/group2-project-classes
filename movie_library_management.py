@@ -32,7 +32,7 @@ def load_movies(file_name):
             price = float(movie_data[5])
             movie = Movie(movie_id, title, director, genre, available, price)
             movies.append(movie)
-    
+
     return movies
 
 #When exiting the program, this function saves all movie changes to the csv file
@@ -48,6 +48,7 @@ def save_movies(file_name, movies):
                 str(movie.get_price())
             ]
             file.write(','.join(movie_data) + '\n')
+    return None
 #Main menu
 
 def print_menu():
@@ -145,6 +146,7 @@ def print_movies(movies):
             movie.get_price(),
             movie.get_rental_count()
         ))
+    return None
 
 #movie_index to help find a movie's index by ID
 def movie_index(movies, movie_id):
