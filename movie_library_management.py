@@ -37,23 +37,17 @@ def load_movies(file_name):
 
 #When exiting the program, this function saves all movie changes to the csv file
 def save_movies(file_name, movies):
-    user_input = input('Would you like to update the catalog (yes/y, no/n)? ').lower()
-    while user_input != 'no' or 'n':
-        if user_input == 'yes' or 'y':
-            with open(file_name, 'w') as file:
-                for movie in movies:
-                    movie_data = [
-                        str(movie.get_id()),
-                        f'{movie.get_title()}',
-                        f'{movie.get_director()}',  
-                        str(movie.get_genre()),
-                        str(movie.get_available()).capitalize(),
-                        str(movie.get_price())
-                    ]
-                    file.write(','.join(movie_data) + '\n')
-        else:
-            print('Invalid selection. Please try again.')
-
+    with open(file_name, 'w') as file:
+        for movie in movies:
+            movie_data = [
+                str(movie.get_id()),
+                f'{movie.get_title()}',
+                f'{movie.get_director()}',  
+                str(movie.get_genre()),
+                str(movie.get_available()).capitalize(),
+                str(movie.get_price())
+            ]
+            file.write(','.join(movie_data) + '\n')
 #Main menu
 
 def print_menu():
@@ -100,13 +94,13 @@ def print_menu():
 #Search for movies using title, director, or genre
 def search_movies(movies, search_term):
     search_term = search_term.lower()
-    matched_movies = []
+    found_movies = []
     for movie in movies:
         if (search_term in movie.get_title().lower() or 
             search_term in movie.get_director().lower() or 
             search_term in movie.get_genre_name().lower()):
-            matched_movies.append(movie)
-    return matched_movies
+            found_movies.append(movie)
+    return found_movies
 
 #Rent a movie by ID
 def rent_movie(movies, movie_id):
@@ -162,6 +156,7 @@ def movie_index(movies, movie_id):
 #main function that loads the file, displays the menu, and handles user interaction
 def main():
     movies = load_movies('movie')
+    MOVIE_FILE = 'movies.csv'
     user_input = print_menu()
 
     while user_input != '0':
@@ -190,6 +185,19 @@ def main():
             
         print()
         user_input = print_menu()
+
+    #Saves current movies to the catalog
+    save = input('Would you like to update the catalog (yes/y, no/n)? ').lower()
+    while (save != 'yes') or (save != 'y') or (save != 'no') or (save != 'n'):
+        if (save == 'yes') or (save == 'y'):
+            save_movies(MOVIE_FILE, movies)
+            print('Movie catalog has been updated. Goodbye!')
+            return None
+        if (save == 'no') or (save == 'n'):
+            print('Movie catalog has not been updated. Goodbye.')
+            return None
+        else:
+            save = input('Invalid choice. Please choose (yes/y, no/n) ').lower()
 
 if __name__ == "__main__":
     main()
