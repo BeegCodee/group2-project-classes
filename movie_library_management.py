@@ -127,10 +127,10 @@ def return_movie(movies, movie_id):
         movie = movies[index]
         if not movie.get_available():
             movie.return_movie()
-            return f"Movie '{movie.get_title()}' has been returned successfully."
+            return f"You have successfully returned '{movie.get_title()}'"
         else:
-            return "This movie is already available (not rented)."
-    return "Movie not found."
+            return f"'{movie.get_title()}' was not rented."
+    return f'Movie with ID {movie_id} not found.'
 
 #Prints a list of movies
 def print_movies(movies):
@@ -176,11 +176,18 @@ def main():
             else:
                 print('No matching movies found.')
 
+        #Rent a movie
         if user_input == '2':
             movie_id = input('Enter the movie ID to rent: ')
-            option = rent_movie(movies, movie_id)
-            print(option)
+            rent = rent_movie(movies, movie_id)
+            print(rent)
 
+        #Return a movie
+        if user_input == '3':
+            movie_id = input('Enter the movie ID to return: ')
+            movie_return = return_movie(movies, movie_id)
+            print(movie_return)
+            
         print()
         user_input = print_menu()
 
