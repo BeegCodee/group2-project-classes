@@ -7,3 +7,22 @@ Description: Python application that manages movie intentory and rental processe
 Authors: Dylan Dang, Taylor Blair-Kril
 Date: April 10, 2025
 '''
+
+import os
+from movie import Movie
+
+def load_movies(file_name):
+    file_name = input('Enter the movie catalog filename: ')
+    if not os.path.exists(file_name):
+        print(f'The catalog file ({file_name}) is not found\nThe movie library management system starts without catalog')
+        return []
+    
+    movies = []
+    with open(file_name, 'r') as f:
+        for line in f:
+            movie_data = line.strip().split(',')
+            if movie_data not in movies:
+                movies.append(movie_data)
+        return movies
+    
+print(load_movies('movies'))
