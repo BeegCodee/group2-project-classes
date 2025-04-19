@@ -48,7 +48,7 @@ class Movie:
         return self.__rental_count
     
     def get_genre_name(self):
-        return self.GENRE_NAMES.get(self.__genre, 'Unknown')
+        return self.GENRE_NAMES.get(self.__genre, '')
     
     def get_availability(self):
         if self.__available == True:

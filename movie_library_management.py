@@ -11,6 +11,7 @@ Date: April 10, 2025
 import os
 from movie import Movie
 
+#loads movies from the csv file into a list
 def load_movies(file_name):
     file_name = input('Enter the movie catalog filename: ')
     if not os.path.exists(file_name):
@@ -24,5 +25,20 @@ def load_movies(file_name):
             if movie_data not in movies:
                 movies.append(movie_data)
         return movies
-    
+
+#test functionality (remove in the future)
 print(load_movies('movies'))
+
+#when exiting the program, this function saves all movie changes to the csv file
+def save_movies(file_name, movies):
+    with open(file_name, 'w') as file:
+        for movie in movies:
+            movie_data = [
+                str(movie.get_id()),
+                f'{movie.get_title()}',
+                f'{movie.get_director()}',  
+                str(movie.get_genre()),
+                str(movie.get_available()).lower(),
+                str(movie.get_price())
+            ]
+            file.write(','.join(movie_data) + '\n')
