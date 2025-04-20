@@ -149,16 +149,17 @@ def add_movies(movies):
     index = movie_index(movies, movie_id)
     if index != None:
         print(f'Movie with ID {movie_id} already exists') 
-
+        return
     else:
         title = input(f'Enter title: ').capitalize()
         director = input(f'Enter director: ').capitalize()
         genre = input(f'Enter genre: ').capitalize()
         price = float(input(f'Enter price: '))
         print(f'Movie {title} added successfully')
+        new_movie = Movie(movie_id, title, director, genre, True, price)
+        movies.append(new_movie)
 
-    new_movie = Movie(movie_id, title, director, genre, True, price)
-    movies.append(new_movie)
+    
 
 def remove_movie(movies):
     movie_id = int(input('Enter the movie ID to remove: '))
@@ -184,8 +185,22 @@ def list_movies_by_genre(movies):
             if (chosen_genre in movie.get_genre_name().lower()):
                 print(movie)
 
+def check_availability_by_genre(movies):
+    genre_id = int(input(f'Enter genre (0-9): '))
+    genre_name = Movie.GENRE_NAMES
+    if genre_id > len(genre_name) or genre_id < 0:
+        print('Invalid genre: Enter a valid genre (0-9)')
+        return
+    else:
+        chosen_genre = Movie.GENRE_NAMES[genre_id].lower()
+        matched_movies = []
+        for movie in movies:
+            if (chosen_genre in movie.get_genre_name().lower() and movie.get_available() == True):
+                print(movie)
+
 def top_rented_movies(movies):
-    lambda movie: movie.get_rental_count()
+    popular_movies = lambda movie: movie.get_rental_count()
+    print(popular_movies)
 
 
 #Prints a list of movies
@@ -261,6 +276,14 @@ def main():
         if user_input == '7':
             movie_genres = list_movies_by_genre(movies)
             print(movie_genres)
+        
+        if user_input == '8':
+            most_rented_movies = top_rented_movies(movies)
+            print(most_rented_movies)
+
+        if user_input == '9':
+            movie_genre_available = check_availability_by_genre(movies)
+            print(movie_genre_available)
 
         print()
         user_input = print_menu()
