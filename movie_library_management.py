@@ -86,6 +86,8 @@ def print_menu():
             return user_input
         if user_input == '9':
             return user_input
+        if user_input == '10':
+            return user_input
         else:
             print('Invalid choice. Please try again')
             user_input = input('Enter your selection: ')
