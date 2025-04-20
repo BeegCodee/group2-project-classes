@@ -128,6 +128,7 @@ def return_movie(movies, movie_id):
             return f"'{movie.get_title()}' was not rented."
     return f'Movie with ID {movie_id} not found.'
 
+#Updates a movie by ID
 def update_movie_details(movies):
     movie_id = input('Enter the movie ID to update: ')
     index = movie_index(movies, movie_id)
@@ -146,6 +147,7 @@ def update_movie_details(movies):
     else:
         print(f'Movie with ID {movie_id} is not found')
 
+#Adds a movie to a non_existent ID
 def add_movies(movies):
     movie_id = input('Enter movie ID: ')
     index = movie_index(movies, movie_id)
@@ -160,6 +162,7 @@ def add_movies(movies):
         new_movie = Movie(movie_id, title, director, genre, True, price)
         movies.append(new_movie)
 
+#Removes a movie by its ID
 def remove_movie(movies):
     movie_id = input('Enter the movie ID to remove: ')
     index = movie_index(movies, movie_id)
@@ -171,6 +174,7 @@ def remove_movie(movies):
     else:
         print(f'Movie with ID {movie_id} not found.')
 
+#Lists movies by genre ID
 def list_movies_by_genre(movies):
     genre_id = int(input(f'Enter genre (0-9): '))
     genre_name = Movie.GENRE_NAMES
@@ -201,6 +205,8 @@ def list_movies_by_genre(movies):
                 movie.get_price(),
                 movie.get_rental_count()
         ))
+
+#Lists all available movies by genre ID
 def check_availability_by_genre(movies):
     genre_id = int(input(f'Enter genre (0-9): '))
     genre_name = Movie.GENRE_NAMES
@@ -224,6 +230,7 @@ def check_availability_by_genre(movies):
                 movie.get_rental_count()
         ))
 
+#Lists top 5 most rented movies
 def top_rented_movies(movies):
     if not movies:
         print("No movies in the library.")
@@ -235,6 +242,7 @@ def top_rented_movies(movies):
     print("Top 5 Most Rented Movies:")
     print_movies(top_movies)
 
+#Displays total movies, total available movies, and number of rented movies
 def display_library_summary(movies):
     available_movies = []
     for movie in movies:
