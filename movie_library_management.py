@@ -132,9 +132,9 @@ def update_movie_details(movies):
     if index != None:
         movie = movies[index]
         print('Leave fields blank to keep current values')
-        new_title = input(f'Enter new title (current: {movie.get_title()}): ') or movie.get_title()
+        new_title = input(f'Enter new title (current: {movie.get_title()}): ').title() or movie.get_title()
         movie.set_title(new_title)
-        new_director = input(f'Enter new director (current: {movie.get_director()}): ') or movie.get_director()
+        new_director = input(f'Enter new director (current: {movie.get_director()}): ').title() or movie.get_director()
         movie.set_director(new_director)
         new_genre = input(f'Enter new genre (current: {movie.get_genre()}): ') or movie.get_genre()
         movie.set_genre(new_genre)
@@ -145,22 +145,21 @@ def update_movie_details(movies):
         print(f'Movie with ID {movie_id} is not found')
 
 def add_movies(movies):
-    movie_id = int(input('Enter movie ID: '))
+    movie_id = input('Enter movie ID: ')
     index = movie_index(movies, movie_id)
     if index != None:
-        print(f'Movie with ID {movie_id} already exists') 
-        return
+        print(f'Movie with ID {movie_id} already exists')
     else:
-        title = input(f'Enter title: ').capitalize()
-        director = input(f'Enter director: ').capitalize()
-        genre = input(f'Enter genre: ').capitalize()
+        title = input(f'Enter title: ').title()
+        director = input(f'Enter director: ').title()
+        genre = int(input(f'Enter genre: '))
         price = float(input(f'Enter price: '))
         print(f'Movie {title} added successfully')
         new_movie = Movie(movie_id, title, director, genre, True, price)
         movies.append(new_movie)
 
 def remove_movie(movies):
-    movie_id = int(input('Enter the movie ID to remove: '))
+    movie_id = input('Enter the movie ID to remove: ')
     index = movie_index(movies, movie_id)
     if index != None:
         movie = movies[index] 
@@ -192,14 +191,21 @@ def check_availability_by_genre(movies):
     else:
         chosen_genre = Movie.GENRE_NAMES[genre_id].lower()
         matched_movies = []
+        print("    {:<10} {:<25} {:<21} {:<10} {:<17} {:<10} {:<10}".format("ID", "Title", "Director", "Genre", "Availability", "Price", "Rental Count"))
+        print("-" * 120)
         for movie in movies:
             if (chosen_genre in movie.get_genre_name().lower() and movie.get_available() == True):
                 print(movie)
 
 def top_rented_movies(movies):
-    popular_movies = lambda movie: movie.get_rental_count()
-    print(popular_movies)
-    print()
+    movies_list = []
+    for movie in movies:
+        movies_list.append(movie)
+    movies_list.sort(key=lambda movie: movie.get_rental_count())
+    print("    {:<10} {:<25} {:<21} {:<10} {:<17} {:<10} {:<10}".format("ID", "Title", "Director", "Genre", "Availability", "Price", "Rental Count"))
+    print("-" * 120)
+    for i in range(5):
+        print(movies_list[i])
 
 def display_library_summary(movies):
     available_movies = []
@@ -207,7 +213,8 @@ def display_library_summary(movies):
         if movie.get_available() == True:
             available_movies.append(movie)
     print(f'Total movies: {len(movies)}')
-    print(f'Available movies: ')
+    print(f'Available movies: {len(available_movies)}')
+    print(f'Rented movies: {movie.get_rental_count()}')
 
 #Prints a list of movies
 def print_movies(movies):
@@ -277,13 +284,13 @@ def main():
             print(movie_return)
             
         if user_input == '4':
-            add_movies(movies)
+            display_library_summary(movies)
 
         if user_input == '5':
             remove_movie(movies)
 
         if user_input == '6':
-            update_movie_details(movies)
+            add_movies(movies)
 
         if user_input == '7':
             list_movies_by_genre(movies)
