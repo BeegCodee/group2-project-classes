@@ -215,11 +215,20 @@ def print_movies(movies):
         print('No matching movies found.')
         return
     
-    print("    {:<10} {:<25} {:<21} {:<10} {:<17} {:<10} {:<10}".format("ID", "Title", "Director", "Genre", "Availability", "Price", "Rental Count"))
+    print("{:>3} {:<10} {:<25} {:<21} {:<10} {:<17} {:<10} {:<10}".format(
+        "", 
+        "ID", 
+        "Title", 
+        "Director", 
+        "Genre", 
+        "Availability", 
+        "Price", 
+        "Rental Count"))
     print("-" * 120)
     
     for movie in movies:
-        print("    {:<10} {:<25} {:<21} {:<10} {:<17} ${:<10.2f} {:<10}".format(
+        print("{:>3} {:<10} {:<25} {:<21} {:<10} {:<17} ${:<10.2f} {:<10}".format(
+            "",
             movie.get_id(),
             movie.get_title(),
             movie.get_director(),
