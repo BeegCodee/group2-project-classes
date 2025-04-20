@@ -5,7 +5,7 @@ Description: Python application that manages movie intentory and rental processe
     The application also allows the user to list movies by genre, list the top rented movies,
     check for movies' availability by genre, and display a summary of the movies' library.
 Authors: Dylan Dang, Taylor Blair-Kril
-Date: April 19, 2025
+Date: April 20, 2025
 '''
 
 import os
