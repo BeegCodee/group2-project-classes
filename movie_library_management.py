@@ -217,10 +217,8 @@ def check_availability_by_genre(movies):
         ))
 
 def top_rented_movies(movies):
-    movies_list = []
-    for movie in movies:
-        movies_list.append(movie)
-    movies_list.sort(key=lambda movie: movie.get_rental_count())
+    movies_list = list(movies)
+    movies_list.sort(key=lambda movie: movie.get_rental_count(), reverse= True)
     print_movies(movies_list[:5])
 
 def display_library_summary(movies):
