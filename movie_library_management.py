@@ -179,7 +179,15 @@ def list_movies_by_genre(movies):
         return
     else:
         chosen_genre = Movie.GENRE_NAMES[genre_id].lower()
-        print("    {:<10} {:<25} {:<21} {:<10} {:<17} {:<10} {:<10}".format("ID", "Title", "Director", "Genre", "Availability", "Price", "Rental Count"))
+        print("{:>3} {:<10} {:<25} {:<21} {:<10} {:<17} {:<10} {:<10}".format(
+            "", 
+            "ID", 
+            "Title", 
+            "Director", 
+            "Genre", 
+            "Availability", 
+            "Price", 
+            "Rental Count"))
         print("-" * 120)
         for movie in movies:
             if (chosen_genre in movie.get_genre_name().lower()):
@@ -217,9 +225,15 @@ def check_availability_by_genre(movies):
         ))
 
 def top_rented_movies(movies):
-    movies_list = list(movies)
-    movies_list.sort(key=lambda movie: movie.get_rental_count(), reverse= True)
-    print_movies(movies_list[:5])
+    if not movies:
+        print("No movies in the library.")
+        return
+
+    sorted_movies = sorted(movies, key=lambda movie: movie.get_rental_count(), reverse=True)
+    top_movies = sorted_movies[:5]
+
+    print("Top 5 Most Rented Movies:")
+    print_movies(top_movies)
 
 def display_library_summary(movies):
     available_movies = []
