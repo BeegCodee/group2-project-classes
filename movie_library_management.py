@@ -252,7 +252,7 @@ def display_library_summary(movies):
     print(f'Available movies: {len(available_movies)}')
     print(f'Rented movies: {movie.get_rental_count()}')
 
-#Prints a list of movies
+#Prints formatted movies
 def print_movies(movies):
     if not movies:
         print('No matching movies found.')
