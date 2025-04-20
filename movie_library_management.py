@@ -179,11 +179,20 @@ def list_movies_by_genre(movies):
         return
     else:
         chosen_genre = Movie.GENRE_NAMES[genre_id].lower()
-        matched_movies = []
+        print("    {:<10} {:<25} {:<21} {:<10} {:<17} {:<10} {:<10}".format("ID", "Title", "Director", "Genre", "Availability", "Price", "Rental Count"))
+        print("-" * 120)
         for movie in movies:
             if (chosen_genre in movie.get_genre_name().lower()):
-                print(movie)
-
+                print("{:>3} {:<10} {:<25} {:<21} {:<10} {:<17} ${:<10.2f} {:<10}".format(
+                "",
+                movie.get_id(),
+                movie.get_title(),
+                movie.get_director(),
+                movie.get_genre_name(),
+                "Available" if movie.get_available() else "Rented",
+                movie.get_price(),
+                movie.get_rental_count()
+        ))
 def check_availability_by_genre(movies):
     genre_id = int(input(f'Enter genre (0-9): '))
     genre_name = Movie.GENRE_NAMES
@@ -192,22 +201,27 @@ def check_availability_by_genre(movies):
         return
     else:
         chosen_genre = Movie.GENRE_NAMES[genre_id].lower()
-        matched_movies = []
         print("    {:<10} {:<25} {:<21} {:<10} {:<17} {:<10} {:<10}".format("ID", "Title", "Director", "Genre", "Availability", "Price", "Rental Count"))
         print("-" * 120)
         for movie in movies:
             if (chosen_genre in movie.get_genre_name().lower() and movie.get_available() == True):
-                print(movie)
+                print("{:>3} {:<10} {:<25} {:<21} {:<10} {:<17} ${:<10.2f} {:<10}".format(
+                "",
+                movie.get_id(),
+                movie.get_title(),
+                movie.get_director(),
+                movie.get_genre_name(),
+                "Available" if movie.get_available() else "Rented",
+                movie.get_price(),
+                movie.get_rental_count()
+        ))
 
 def top_rented_movies(movies):
     movies_list = []
     for movie in movies:
         movies_list.append(movie)
     movies_list.sort(key=lambda movie: movie.get_rental_count())
-    print("    {:<10} {:<25} {:<21} {:<10} {:<17} {:<10} {:<10}".format("ID", "Title", "Director", "Genre", "Availability", "Price", "Rental Count"))
-    print("-" * 120)
-    for i in range(5):
-        print(movies_list[i])
+    print_movies(movies_list[:5])
 
 def display_library_summary(movies):
     available_movies = []
