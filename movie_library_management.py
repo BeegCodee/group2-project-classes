@@ -284,13 +284,13 @@ def main():
             print(movie_return)
             
         if user_input == '4':
-            display_library_summary(movies)
+            add_movies(movies)
 
         if user_input == '5':
             remove_movie(movies)
 
         if user_input == '6':
-            add_movies(movies)
+            update_movie_details(movies)
 
         if user_input == '7':
             list_movies_by_genre(movies)
