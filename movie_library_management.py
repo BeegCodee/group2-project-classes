@@ -159,8 +159,6 @@ def add_movies(movies):
         new_movie = Movie(movie_id, title, director, genre, True, price)
         movies.append(new_movie)
 
-    
-
 def remove_movie(movies):
     movie_id = int(input('Enter the movie ID to remove: '))
     index = movie_index(movies, movie_id)
@@ -201,7 +199,15 @@ def check_availability_by_genre(movies):
 def top_rented_movies(movies):
     popular_movies = lambda movie: movie.get_rental_count()
     print(popular_movies)
+    print()
 
+def display_library_summary(movies):
+    available_movies = []
+    for movie in movies:
+        if movie.get_available() == True:
+            available_movies.append(movie)
+    print(f'Total movies: {len(movies)}')
+    print(f'Available movies: ')
 
 #Prints a list of movies
 def print_movies(movies):
@@ -262,28 +268,25 @@ def main():
             print(movie_return)
             
         if user_input == '4':
-            added_movie = add_movies(movies)
-            print(added_movie)
+            add_movies(movies)
 
         if user_input == '5':
-            removed_movie = remove_movie(movies)
-            print(removed_movie)
+            remove_movie(movies)
 
         if user_input == '6':
-            movie_update = update_movie_details(movies)
-            print(movie_update)
+            update_movie_details(movies)
 
         if user_input == '7':
-            movie_genres = list_movies_by_genre(movies)
-            print(movie_genres)
+            list_movies_by_genre(movies)
         
         if user_input == '8':
-            most_rented_movies = top_rented_movies(movies)
-            print(most_rented_movies)
+            top_rented_movies(movies)
 
         if user_input == '9':
-            movie_genre_available = check_availability_by_genre(movies)
-            print(movie_genre_available)
+            check_availability_by_genre(movies)
+        
+        if user_input == '10':
+            display_library_summary(movies)
 
         print()
         user_input = print_menu()
