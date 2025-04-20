@@ -219,7 +219,7 @@ def movie_index(movies, movie_id):
 #main function that loads the file, displays the menu, and handles user interaction
 def main():
     movies = load_movies('movie')
-    MOVIE_FILE = 'movies.csv'
+    file_name = 'movies.csv'
     user_input = print_menu()
 
     while user_input != '0':
@@ -273,7 +273,7 @@ def main():
             print('Movie catalog has been updated. Goodbye!')
             return None
         if (save == 'no') or (save == 'n'):
-            print('Movie catalog has not been updated. Goodbye.')
+            print('Movie catalog has not been updated. Goodbye!')
             return None
         else:
             save = input('Invalid choice. Please choose (yes/y, no/n) ').lower()
