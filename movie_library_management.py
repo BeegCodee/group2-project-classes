@@ -1,4 +1,3 @@
-
 '''
 Project Name: movie_library_management.py
 Description: Python application that manages movie intentory and rental processes.
@@ -6,7 +5,7 @@ Description: Python application that manages movie intentory and rental processe
     The application also allows the user to list movies by genre, list the top rented movies,
     check for movies' availability by genre, and display a summary of the movies' library.
 Authors: Dylan Dang, Taylor Blair-Kril
-Date: April 10, 2025
+Date: April 19, 2025
 '''
 
 import os
@@ -33,27 +32,99 @@ def load_movies(file_name):
             price = float(movie_data[5])
             movie = Movie(movie_id, title, director, genre, available, price)
             movies.append(movie)
-    
     return movies
 
 #When exiting the program, this function saves all movie changes to the csv file
 def save_movies(file_name, movies):
-    user_input = input('Would you like to update the catalog (yes/y, no/n)? ').lower()
-    while user_input != 'no' or 'n':
-        if user_input == 'yes' or 'y':
-            with open(file_name, 'w') as file:
-                for movie in movies:
-                    movie_data = [
-                        str(movie.get_id()),
-                        f'{movie.get_title()}',
-                        f'{movie.get_director()}',  
-                        str(movie.get_genre()),
-                        str(movie.get_available()).capitalize(),
-                        str(movie.get_price())
-                    ]
-                    file.write(','.join(movie_data) + '\n')
+    with open(file_name, 'w') as file:
+        for movie in movies:
+            movie_data = [
+                str(movie.get_id()),
+                f'{movie.get_title()}',
+                f'{movie.get_director()}',  
+                str(movie.get_genre()),
+                str(movie.get_available()).capitalize(),
+                str(movie.get_price())
+            ]
+            file.write(','.join(movie_data) + '\n')
+    return None
+
+#Main menu
+def print_menu():
+    print('Movie Library - Main Menu')
+    print('=' * 25)
+    print('1) Search for movies')
+    print('2) Rent a movie')
+    print('3) Return a movie')
+    print('4) Add a movie')
+    print('5) Remove a movie')
+    print('6) Update movie details')
+    print('7) List movies by genre')
+    print('8) Top rented movies')
+    print('9) Check availability by genre')
+    print('10) Display library summary')
+    print('0) Exit the system')
+
+    #Returns input as string
+    user_input = input('Enter your selection: ')
+    while user_input != '0':
+        if user_input == '1':
+            return user_input
+        if user_input == '2':
+            return user_input
+        if user_input == '3':
+            return user_input
+        if user_input == '4':
+            return user_input
+        if user_input == '5':
+            return user_input
+        if user_input == '6':
+            return user_input
+        if user_input == '7':
+            return user_input
+        if user_input == '8':
+            return user_input
+        if user_input == '9':
+            return user_input
         else:
-            print('Invalid selection. Please try again.')
+            print('Invalid choice. Please try again')
+            user_input = input('Enter your selection: ')
+    return user_input
+
+#Search for movies using title, director, or genre
+def search_movies(movies, search_term):
+    search_term = search_term.lower()
+    found_movies = []
+    for movie in movies:
+        if (search_term in movie.get_title().lower() or 
+            search_term in movie.get_director().lower() or 
+            search_term in movie.get_genre_name().lower()):
+            found_movies.append(movie)
+    return found_movies
+
+#Rent a movie by ID
+def rent_movie(movies, movie_id):
+    index = movie_index(movies, movie_id)
+    if index != None:
+        movie = movies[index]
+        if movie.get_available():
+            movie.borrow_movie()
+            return f"You have successfully rented '{movie.get_title()}'"
+        else:
+            return f"'{movie.get_title()}' is already rented."
+    return f'Movie with ID {movie_id} not found.'
+
+#Return a movie by ID
+def return_movie(movies, movie_id):
+    index = movie_index(movies, movie_id)
+    if index != None:
+        movie = movies[index]
+        if not movie.get_available():
+            movie.return_movie()
+            return f"You have successfully returned '{movie.get_title()}'"
+        else:
+            return f"'{movie.get_title()}' was not rented."
+    return f'Movie with ID {movie_id} not found.'
 
 def update_movie_details(movies):
     movie_id = input('Enter the movie ID to update: ')
@@ -116,81 +187,6 @@ def list_movies_by_genre(movies):
 def top_rented_movies(movies):
     lambda movie: movie.get_rental_count()
 
-def print_menu():
-    print('Movie Library - Main Menu')
-    print('=' * 25)
-    print('1) Search for movies')
-    print('2) Rent a movie')
-    print('3) Return a movie')
-    print('4) Add a movie')
-    print('5) Remove a movie')
-    print('6) Update movie details')
-    print('7) List movies by genre')
-    print('8) Top rented movies')
-    print('9) Check availability by genre')
-    print('10) Display library summary')
-    print('0) Exit the system')
-
-    #Returns input as string
-    user_input = input('Enter your selection: ')
-    while user_input != '0':
-        if user_input == '1':
-            return user_input
-        if user_input == '2':
-            return user_input
-        if user_input == '3':
-            return user_input
-        if user_input == '4':
-            return user_input
-        if user_input == '5':
-            return user_input
-        if user_input == '6':
-            return user_input
-        if user_input == '7':
-            return user_input
-        if user_input == '8':
-            return user_input
-        if user_input == '9':
-            return user_input
-        else:
-            print('Invalid choice. Please try again')
-            user_input = input('Enter your selection: ')
-    return user_input
-
-#Search for movies using title, director, or genre
-def search_movies(movies, search_term):
-    search_term = search_term.lower()
-    matched_movies = []
-    for movie in movies:
-        if (search_term in movie.get_title().lower() or 
-            search_term in movie.get_director().lower() or 
-            search_term in movie.get_genre_name().lower()):
-            matched_movies.append(movie)
-    return matched_movies
-
-#Rent a movie by ID
-def rent_movie(movies, movie_id):
-    index = movie_index(movies, movie_id)
-    if index != None:
-        movie = movies[index]
-        if movie.get_available():
-            movie.borrow_movie()
-            return f"You have successfully rented '{movie.get_title()}'"
-        else:
-            return f"'{movie.get_title()}' is already rented."
-    return f'Movie with ID {movie_id} not found.'
-
-#Return a movie by ID
-def return_movie(movies, movie_id):
-    index = movie_index(movies, movie_id)
-    if index != None:
-        movie = movies[index]
-        if not movie.get_available():
-            movie.return_movie()
-            return f"You have successfully returned '{movie.get_title()}'"
-        else:
-            return f"'{movie.get_title()}' was not rented."
-    return f'Movie with ID {movie_id} not found.'
 
 #Prints a list of movies
 def print_movies(movies):
@@ -211,6 +207,7 @@ def print_movies(movies):
             movie.get_price(),
             movie.get_rental_count()
         ))
+    return None
 
 #movie_index to help find a movie's index by ID
 def movie_index(movies, movie_id):
@@ -272,7 +269,7 @@ def main():
     save = input('Would you like to update the catalog (yes/y, no/n)? ').lower()
     while (save != 'yes') or (save != 'y') or (save != 'no') or (save != 'n'):
         if (save == 'yes') or (save == 'y'):
-            save_movies(MOVIE_FILE, movies)
+            save_movies(file_name, movies)
             print('Movie catalog has been updated. Goodbye!')
             return None
         if (save == 'no') or (save == 'n'):
@@ -280,11 +277,6 @@ def main():
             return None
         else:
             save = input('Invalid choice. Please choose (yes/y, no/n) ').lower()
-
-        
-            
-        print()
-        user_input = print_menu()
 
 if __name__ == "__main__":
     main()
