@@ -138,7 +138,7 @@ def update_movie_details(movies):
         movie.set_title(new_title)
         new_director = input(f'Enter new director (current: {movie.get_director()}): ').title() or movie.get_director()
         movie.set_director(new_director)
-        new_genre = input(f'Enter new genre (current: {movie.get_genre()}): ') or movie.get_genre()
+        new_genre = input(f'Enter new genre (current: {movie.get_genre_name()}): ') or movie.get_genre()
         movie.set_genre(new_genre)
         new_price = float(input(f'Enter new price (current: {movie.get_price()}): ')) or movie.get_price()
         movie.set_price(new_price)
@@ -150,13 +150,13 @@ def add_movies(movies):
     movie_id = input('Enter movie ID: ')
     index = movie_index(movies, movie_id)
     if index != None:
-        print(f'Movie with ID {movie_id} already exists')
+        print(f'Movie with ID {movie_id} exists')
     else:
         title = input(f'Enter title: ').title()
         director = input(f'Enter director: ').title()
-        genre = int(input(f'Enter genre: '))
+        genre = int(input(f'Enter genre (0-9): '))
         price = float(input(f'Enter price: '))
-        print(f'Movie {title} added successfully')
+        print(f"Movie '{title}' added successfully")
         new_movie = Movie(movie_id, title, director, genre, True, price)
         movies.append(new_movie)
 
